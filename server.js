@@ -3,6 +3,7 @@ const express = require("express");
 const socket = require("socket.io");
 
 // App setup
+const config = require('./server.config.json');
 const app = express();
 const server = require("http").createServer(app);
 
@@ -19,14 +20,19 @@ app.get("/", function (req, res) {
     res.sendFile(path.resolve("./public/clients.html"));
 })
 
-io.on("connection", socket => {
+io.on("connection", (socket) => {
 
     connectedClients.push({
         id: socket.id,
         name: "user", 
     });
 
-    socket.on("joinedServer", connectedClients);
+    socket.on("joinedServer", () => {
+        socket.emit("clientsConnected", connectedClients)
+    });
 });
 
-server.listen(3000);
+server.listen(config.port, () => {
+    console.log(`Server listening on port ${config.port}`);
+    console.log(`http://localhost:${config.port}`);
+});
