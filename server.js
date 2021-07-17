@@ -17,6 +17,10 @@ const io = socket(server);
 const connectedClients = [];
 const disconnectedClients = [];
 
+// array containing available seats
+const availableSeats = [];
+const seatsTaken = [];
+
 app.get("/", function (req, res) {
     res.sendFile(path.resolve("./public/clients.html"));
 })
