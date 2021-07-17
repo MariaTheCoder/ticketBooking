@@ -28,21 +28,19 @@ socket.on("clientsConnected", (data) => {
 
 socket.on("userDisconnect", (connectedUsers, disconnectedUsers) => {
 
-    // listOfConnectedClients.innerHTML = "";
-    // listedDisconnectedClients.innerHTML = "";
+    displayUsers(connectedUsers, listOfConnectedClients);
+    displayUsers(disconnectedUsers, listedDisconnectedClients);
 
-    // connectedUsers.forEach(user => {
-    //     const client = document.createElement("li");
-    //     client.innerHTML = user.id;
-    //     listOfConnectedClients.appendChild(client);
-    // });
-
-    // disconnectedUsers.forEach(user => {
-    //     const client = document.createElement("li");
-    //     client.innerHTML = user.id;
-    //     listOfDisconnectedClients.appendChild(client);
-    // });
-    // console.log("connected users", connectedUsers);
-    console.log("Connected users: ", connectedUsers, ". Disconnected users: ", disconnectedUsers);
+    console.log("Hello World");
 });
 
+function displayUsers(arrayOfUsers, htmlListElement) {
+
+    htmlListElement.innerHTML = "";
+
+    arrayOfUsers.forEach(user => {
+        const client = document.createElement("li");
+        client.innerHTML = user.id;
+        htmlListElement.appendChild(client);
+    })
+}
