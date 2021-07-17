@@ -13,6 +13,12 @@ socket.emit("joinedServer", {
 socket.on("clientsConnected", (data) => {
     console.log("connected users", data);
 
+    data.forEach(user => {
+        if(user.id === socket.id) {
+            user.name = "You";
+        }
+    });
+
     displayUsers(data, listOfConnectedClients);
 
 });

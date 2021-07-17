@@ -27,6 +27,11 @@ app.get("/", function (req, res) {
 
 io.on("connection", (socket) => {
 
+    connectedClients.push({
+        id: socket.id,
+        name: "user", 
+    });
+
     socket.on("disconnect", () => {
 
         // firstly, remove disconnected client from list of connected users
@@ -44,20 +49,22 @@ io.on("connection", (socket) => {
         disconnectedClients.push(disconnectedUser);
 
         // emit both lists to socket
-        socket.emit("userDisconnect", (connectedClients, disconnectedClients));
+
+        connectedClients.forEach(user => {
+            socket.emit("userDisconnect", (connectedClients, disconnectedClients));
+        });
 
         console.log("a user disconnected: ", disconnectedUser);
         console.log("disconnected users: ", disconnectedClients); 
         console.log("connected users: ", connectedClients);
     });
 
-    connectedClients.push({
-        id: socket.id,
-        name: "user", 
-    });
-
     socket.on("joinedServer", () => {
-        socket.emit("clientsConnected", connectedClients)
+        connectedClients.forEach(user => {
+            if(socket.id === user.id) {
+                socket.emit("clientsConnected", connectedClients);
+            }             
+        });
     });
 });
 
