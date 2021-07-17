@@ -40,11 +40,11 @@ io.on("connection", (socket) => {
         disconnectedClients.push(disconnectedUser);
 
         // emit both lists to socket
-        socket.emit("userDisconnect", connectedClients, disconnectedClients);
+        socket.emit("userDisconnect", (connectedClients, disconnectedClients));
 
-        console.log("disconnected user ", disconnectedUser);
-        console.log("disconnected clients", disconnectedClients); 
-        console.log("connected users", connectedClients);
+        console.log("a user disconnected: ", disconnectedUser);
+        console.log("disconnected users: ", disconnectedClients); 
+        console.log("connected users: ", connectedClients);
     });
 
     connectedClients.push({
