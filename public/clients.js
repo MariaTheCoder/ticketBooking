@@ -13,17 +13,8 @@ socket.emit("joinedServer", {
 socket.on("clientsConnected", (data) => {
     console.log("connected users", data);
 
-    data.forEach(element => {
-        const client = document.createElement("li");
+    displayUsers(data, listOfConnectedClients);
 
-        if(element.id === socket.id) {
-            client.innerHTML = element.id + ' (You)';
-            listOfConnectedClients.appendChild(client);
-        } else {
-            client.innerHTML = element.id;
-            listOfConnectedClients.appendChild(client);
-        }
-    });
 });
 
 socket.on("userDisconnect", (connectedUsers, disconnectedUsers) => {
